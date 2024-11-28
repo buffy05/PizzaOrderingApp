@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         switch (position) {
             case 0: // Choose Pizza
-                //intent = new Intent(MainActivity.this, ChoosePizzaActivity.class);
+                intent = new Intent(MainActivity.this, SelectPizzaActivity.class);
                 Toast.makeText(this, "Clicked: " + menuOptions[position], Toast.LENGTH_SHORT).show();
                 break;
             case 1: // Build Your Own Pizza
@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
         }
 
-//        if (intent != null) {
-//            startActivity(intent);
-//        }
+        if (intent != null) {
+            startActivity(intent);
+        }
     }
 }
