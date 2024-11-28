@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Project5</string>
     <string name="RUPizza_main_menu">RU Pizzeria</string>
+    <string name="select_pizza">Select Pizza</string>
 </resources>

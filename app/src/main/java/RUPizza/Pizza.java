@@ -60,7 +60,7 @@ public abstract class Pizza {
      * @param topping the topping to add
      */
     public void addTopping(Topping topping) {
-        if (toppings.size() < 8) {
+        if (toppings.size() < 7) {
             toppings.add(topping);
         }
     }
