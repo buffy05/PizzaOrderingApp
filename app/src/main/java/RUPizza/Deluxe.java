@@ -1,5 +1,8 @@
 package RUPizza;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Represents a Deluxe pizza with a set of default toppings and size-based pricing.
  * Extends the {@link Pizza} class.
@@ -38,5 +41,26 @@ public class Deluxe extends Pizza {
             case LARGE: return 20.99;
             default: return 0;
         }
+    }
+
+    public static final Creator<Deluxe> CREATOR = new Creator<Deluxe>() {
+        @Override
+        public Deluxe createFromParcel(Parcel in) {
+            return new Deluxe(in);
+        }
+
+        @Override
+        public Deluxe[] newArray(int size) {
+            return new Deluxe[size];
+        }
+    };
+
+    protected Deluxe(Parcel in) {
+        super(in);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
     }
 }

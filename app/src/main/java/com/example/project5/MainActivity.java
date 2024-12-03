@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // initialize AppContext
+        AppContext.initialize();
+
         // Link the ListView from the layout
         ListView listView = findViewById(R.id.mainListView);
 
@@ -44,19 +47,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = null;
 
         switch (position) {
-            case 0: // Choose Pizza
+            case 0: // Select Pizza
                 intent = new Intent(MainActivity.this, SelectPizzaActivity.class);
                 Toast.makeText(this, "Clicked: " + menuOptions[position], Toast.LENGTH_SHORT).show();
                 break;
-            case 1: // Build Your Own Pizza
-                //intent = new Intent(MainActivity.this, BuildYourOwnPizzaActivity.class);
+            case 1: // View Current Order
+                intent = new Intent(MainActivity.this, CurrentOrderActivity.class);
                 Toast.makeText(this, "Clicked: " + menuOptions[position], Toast.LENGTH_SHORT).show();
                 break;
-            case 2: // View Current Order
-                //intent = new Intent(MainActivity.this, ViewCurrentOrderActivity.class);
-                Toast.makeText(this, "Clicked: " + menuOptions[position], Toast.LENGTH_SHORT).show();
-                break;
-            case 3: // All Past Orders
+            case 2: // Store Orders
                 //intent = new Intent(MainActivity.this, AllPastOrdersActivity.class);
                 Toast.makeText(this, "Clicked: " + menuOptions[position], Toast.LENGTH_SHORT).show();
                 break;

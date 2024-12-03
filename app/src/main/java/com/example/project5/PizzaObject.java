@@ -6,11 +6,13 @@ public class PizzaObject {
     private String pizzaName;
     private Pizza pizza;
     private int imageResId;
+    private boolean isSelected;
 
     public PizzaObject(String pizzaName, Pizza pizza, int imageResId) {
         this.pizzaName = pizzaName;
         this.pizza = pizza;
         this.imageResId = imageResId;
+        this.isSelected = false;
     }
 
     public String getPizzaName() {
@@ -23,5 +25,13 @@ public class PizzaObject {
 
     public int getImageResId() {
         return imageResId;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

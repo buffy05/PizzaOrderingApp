@@ -1,5 +1,10 @@
 package RUPizza;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.Nullable;
+
 /**
  * Represents a customizable pizza where users can choose their own toppings.
  * Pricing is based on size and the number of added toppings.
@@ -20,6 +25,11 @@ public class BuildYourOwn extends Pizza {
         super(crust, size);
     }
 
+    @Override
+    public boolean isBuildYourOwn() {
+        return true;
+    }
+
     /**
      * Returns the price of the pizza based on its size and number of toppings.
      * Base price per size: $8.99 for SMALL, $10.99 for MEDIUM, $12.99 for LARGE.
@@ -38,4 +48,27 @@ public class BuildYourOwn extends Pizza {
         }
         return basePrice + (getToppings().size() * 1.69);
     }
+
+    // parcelable implementation
+    protected BuildYourOwn(Parcel in) {
+        super(in);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+    }
+
+    public static final Parcelable.Creator<BuildYourOwn> CREATOR = new Parcelable.Creator<BuildYourOwn>() {
+        @Override
+        public BuildYourOwn createFromParcel(Parcel in) {
+            return new BuildYourOwn(in);
+        }
+
+        @Override
+        public BuildYourOwn[] newArray(int size) {
+            return new BuildYourOwn[size];
+        }
+    };
+
 }

@@ -1,5 +1,8 @@
 package RUPizza;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +12,7 @@ import java.util.ArrayList;
  * @author Syona Bhandari
  * @author Rhemie Patiak
  */
-public class Order {
+public class Order implements Parcelable {
     private int number;
     private ArrayList<Pizza> pizzas;
     private static int orderCounter = 1;
@@ -22,6 +25,11 @@ public class Order {
         this.pizzas = new ArrayList<>();
     }
 
+    public Order(int number, ArrayList<Pizza> pizzas) {
+        this.number = number;
+        this.pizzas = pizzas != null ? pizzas : new ArrayList<>();
+    }
+
     /**
      * Retrieves the unique order number for this order.
      *
@@ -29,6 +37,13 @@ public class Order {
      */
     public int getOrderNumber() {
         return number;
+    }
+
+    /**
+     * Increments the global order counter and updates the order number.
+     */
+    public void incrementOrderNumber() {
+        this.number = orderCounter++;
     }
 
     /**
@@ -115,4 +130,33 @@ public class Order {
         sb.append("Order Total: $").append(String.format("%.2f", calculateOrderTotal())).append("\n");
         return sb.toString();
     }
+
+    // parcelable implementation
+    protected Order(Parcel in) {
+        number = in.readInt();
+        pizzas = in.createTypedArrayList(Pizza.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(number);
+        dest.writeTypedList(pizzas);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
+        @Override
+        public Order createFromParcel(Parcel in) {
+            return new Order(in);
+        }
+
+        @Override
+        public Order[] newArray(int size) {
+            return new Order[size];
+        }
+    };
 }

@@ -1,5 +1,8 @@
 package RUPizza;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Represents a Meatzza pizza with a set of default meat toppings and size-based pricing.
  * Extends the {@link Pizza} class.
@@ -38,4 +41,25 @@ public class Meatzza extends Pizza {
             default: return 0;
         }
     }
+
+    protected Meatzza(Parcel in) {
+        super(in);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+    }
+
+    public static final Creator<Meatzza> CREATOR = new Creator<Meatzza>() {
+        @Override
+        public Meatzza createFromParcel(Parcel in) {
+            return new Meatzza(in);
+        }
+
+        @Override
+        public Meatzza[] newArray(int size) {
+            return new Meatzza[size];
+        }
+    };
 }

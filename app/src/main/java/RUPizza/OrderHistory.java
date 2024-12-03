@@ -13,12 +13,25 @@ import java.util.List;
 public class OrderHistory {
     /** List of all completed orders in the history. */
     private List<Order> orders;
+    private static OrderHistory instance;
 
     /**
      * Constructs a new, empty order history.
      */
     public OrderHistory() {
         orders = new ArrayList<>();
+    }
+
+    /**
+     * Provides a singleton instance of the `OrderHistory` class.
+     *
+     * @return the singleton instance of `OrderHistory`
+     */
+    public static OrderHistory getInstance() {
+        if (instance == null) {
+            instance = new OrderHistory();
+        }
+        return instance;
     }
 
     /**
@@ -52,7 +65,7 @@ public class OrderHistory {
      * Finds an order in the history by its unique order number.
      *
      * @param number the unique order number to search for.
-     * @return thje {@link Order} with the specified order number, or
+     * @return the {@link Order} with the specified order number, or
      * {@code null} if no matching order is found.
      */
     public Order getOrderByNumber(int number) {

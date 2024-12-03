@@ -1,5 +1,8 @@
 package RUPizza;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  * @author Syona Bhandari
  * @author Rhemie Patiak
  */
-public abstract class Pizza {
+public abstract class Pizza implements Parcelable {
     private ArrayList<Topping> toppings = new ArrayList<>();
     private Crust crust;
     private Size size;
@@ -31,28 +34,36 @@ public abstract class Pizza {
      *
      * @return the crust type
      */
-    public Crust getCrust() { return crust; }
+    public Crust getCrust() {
+        return crust;
+    }
 
     /**
      * Returns the size of the pizza.
      *
      * @return the size of the pizza
      */
-    public Size getSize() { return size; }
+    public Size getSize() {
+        return size;
+    }
 
     /**
      * Returns a copy of the list of toppings on the pizza.
      *
      * @return a list of toppings
      */
-    public ArrayList<Topping> getToppings() { return new ArrayList<>(toppings); }
+    public ArrayList<Topping> getToppings() {
+        return new ArrayList<>(toppings);
+    }
 
     /**
      * Sets the size of the pizza.
      *
      * @param size the size to set
      */
-    public void setSize(Size size) { this.size = size; }
+    public void setSize(Size size) {
+        this.size = size;
+    }
 
     /**
      * Adds a topping to the pizza. A maximum of 8 toppings are allowed.
@@ -70,7 +81,19 @@ public abstract class Pizza {
      *
      * @param topping the topping to remove
      */
-    public void removeTopping(Topping topping) { toppings.remove(topping); }
+    public void removeTopping(Topping topping) {
+        toppings.remove(topping);
+    }
+
+    /**
+     * Checks if the pizza is a "Build Your Own" type.
+     * This method should be overridden by subclasses if applicable.
+     *
+     * @return true if the pizza is "Build Your Own", false otherwise.
+     */
+    public boolean isBuildYourOwn() {
+        return false;
+    }
 
     /**
      * Calculates the price of the pizza. This method is abstract and must be implemented
@@ -94,4 +117,42 @@ public abstract class Pizza {
                 ", price=" + String.format("%.2f", price()) +
                 '}';
     }
+
+    // parcelable implementation
+    protected Pizza (Parcel in) {
+        crust = Crust.valueOf(in.readString());
+        size = Size.valueOf(in.readString());
+        toppings = in.createTypedArrayList(Topping.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(crust.name());
+        dest.writeString(size.name());
+        dest.writeTypedList(toppings);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Pizza> CREATOR = new Creator<Pizza>() {
+        @Override
+        public Pizza createFromParcel(Parcel in) {
+            String className = in.readString();
+            try {
+                Class<?> clazz = Class.forName(className);
+                return (Pizza) clazz.getConstructor(Parcel.class).newInstance(in);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        public Pizza[] newArray(int size) {
+            return new Pizza[size];
+        }
+    };
 }
