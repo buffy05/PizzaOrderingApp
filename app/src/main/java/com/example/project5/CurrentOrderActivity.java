@@ -38,13 +38,9 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
         // toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle("Current Order");
-            }
-        }
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Current Order");
 
         // Initialize Views
         recyclerViewCurrentOrder = findViewById(R.id.recyclerViewCurrentOrder);
@@ -60,12 +56,14 @@ public class CurrentOrderActivity extends AppCompatActivity {
         recyclerViewCurrentOrder.setLayoutManager(new LinearLayoutManager(this));
 
         // retrieve currentOrder
-        currentOrder = AppContext.getCurrentOrder();
+        currentOrder = OrderHistory.getInstance().getCurrentOrder();
         Log.d("CurrentOrderActivity", "Loaded Current Order: " + currentOrder);
+        Log.d("CurrentOrderActivity", "Pizzas in Current Order: " + currentOrder.getPizzas());
 
-        // initialize PizzaAdapter with current order pizzas
+        // initialize PizzaAdapter
         pizzaAdapter = new PizzaAdapter(this, currentOrder.getPizzas());
         recyclerViewCurrentOrder.setAdapter(pizzaAdapter);
+        pizzaAdapter.notifyDataSetChanged();
 
         // Display initial order details
         updateOrderDetails();
@@ -106,7 +104,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
     private void removeSelectedPizza() {
         // Remove the selected pizza
-        int selectedPosition = pizzaAdapter.getSelectedPosition(); // Assume adapter tracks selection
+        int selectedPosition = pizzaAdapter.getSelectedPosition();
         if (selectedPosition == -1) {
             Toast.makeText(this, "Please select a pizza to remove.", Toast.LENGTH_SHORT).show();
             return;
@@ -131,14 +129,14 @@ public class CurrentOrderActivity extends AppCompatActivity {
         }
 
         // adding order to OrderHistory
-        AppContext appContext = (AppContext) getApplicationContext();
-        appContext.getOrderHistory().addOrder(currentOrder);
-
-        // reset
-        appContext.resetCurrentOrder();
+        OrderHistory orderHistory = OrderHistory.getInstance();
+        orderHistory.addOrder(currentOrder);
 
         // Show confirmation
         Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+
+        // reset
+        orderHistory.resetCurrentOrder();
 
         // Navigate back to the main menu
         finish();

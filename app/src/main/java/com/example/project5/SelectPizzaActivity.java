@@ -24,7 +24,6 @@ public class SelectPizzaActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PizzaAdapter pizzaAdapter;
     private List<PizzaObject> pizzaObjectList;
-    private ArrayList<Pizza> selectedPizzas;
     private Order currentOrder;
 
 
@@ -46,14 +45,13 @@ public class SelectPizzaActivity extends AppCompatActivity {
 
         // initialize pizzaList and adapter
         pizzaObjectList = new ArrayList<>();
-        selectedPizzas = new ArrayList<>();
         populatePizzaList();
         pizzaAdapter = new PizzaAdapter(this, pizzaObjectList);
         recyclerView.setAdapter(pizzaAdapter);
 
         // retrieve currentOrder
-        AppContext appContext = (AppContext) getApplicationContext();
-        currentOrder = appContext.getCurrentOrder();
+        currentOrder = OrderHistory.getInstance().getCurrentOrder();
+        Log.d("SelectPizzaActivity", "Loaded Current Order: " + currentOrder);
 
         // handle back button navigation
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -62,10 +60,6 @@ public class SelectPizzaActivity extends AppCompatActivity {
                 passSelectedPizzasToOrder(true);
             }
         });
-    }
-
-    private void finalizeOrder() {
-        passSelectedPizzasToOrder(false); // Indicate the user is finalizing the order
     }
 
     @Override
@@ -78,21 +72,18 @@ public class SelectPizzaActivity extends AppCompatActivity {
     }
 
     private void passSelectedPizzasToOrder(boolean isNavigatingBack) {
-        // clear previous selections
-        selectedPizzas.clear();
-        // loop through pizza adapter and collect selected pizzas
+        // retrieve current order from orderHistory
+        Log.d("SelectPizzaActivity", "Current Order before update: " + currentOrder);
+
+        // Loop through selected pizzas and add them to the current order
         for (PizzaObject pizzaObject : pizzaObjectList) {
             if (pizzaObject.isSelected()) {
-                selectedPizzas.add(pizzaObject.getPizza());
+                Pizza pizza = pizzaObject.getPizza();
+                OrderHistory.getInstance().getCurrentOrder().addPizza(pizza);
+                Log.d("SelectPizzaActivity", "Added pizza: " + pizza);
             }
         }
-
-        // Update AppContext with selected pizzas
-        Order currentOrder = AppContext.getCurrentOrder();
-        currentOrder.getPizzas().clear();
-        currentOrder.getPizzas().addAll(selectedPizzas);
-        Log.d("SelectPizzaActivity", "Updated Current Order: " + currentOrder);
-
+        Log.d("SelectPizzaActivity", "Updated Current Order: " + OrderHistory.getInstance().getCurrentOrder());
 
         if (!isNavigatingBack) {
             // Navigate to CurrentOrderActivity
@@ -102,29 +93,6 @@ public class SelectPizzaActivity extends AppCompatActivity {
             // Navigate back to MainActivity (unconditionally)
             finish();
         }
-
-        /**
-        // update currentOrder
-        AppContext appContext = (AppContext) getApplicationContext();
-        currentOrder.getPizzas().clear();
-        currentOrder.getPizzas().addAll(selectedPizzas);
-
-        // log and navigate to CurrentOrder
-        Log.d("SelectPizzaActivity", "Passing order: " + currentOrder.toString());
-        Intent intent = new Intent(this, CurrentOrderActivity.class);
-        startActivity(intent);
-
-         // order number
-         SharedPreferences sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
-         SharedPreferences.Editor editor = sharedPreferences.edit();
-         editor.putInt("currentOrderNumber", currentOrder.getOrderNumber() + 1);
-         editor.apply();
-
-         // pass current order
-         Intent intent = new Intent(this, CurrentOrderActivity.class);
-         intent.putExtra("currentOrder", currentOrder);
-         startActivity(intent);
-         */
     }
 
     private void populatePizzaList() {

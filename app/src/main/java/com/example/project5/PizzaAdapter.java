@@ -1,6 +1,7 @@
 package com.example.project5;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,6 +127,13 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
                     Toast.makeText(context, "Please select a size before adding to cart.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                // add to current order
+                Order currentOrder = OrderHistory.getInstance().getCurrentOrder();
+                currentOrder.addPizza(pizza);
+                Log.d("PizzaAdapter", "Added pizza to current order: " + pizza.toString());
+                Log.d("PizzaAdapter", "Current order now contains: " + currentOrder.getPizzas());
+
 
                 new androidx.appcompat.app.AlertDialog.Builder(context)
                         .setTitle("Add to Cart")

@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // initialize AppContext
-        AppContext.initialize();
 
         // Link the ListView from the layout
         ListView listView = findViewById(R.id.mainListView);
