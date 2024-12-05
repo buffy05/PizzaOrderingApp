@@ -1,18 +1,22 @@
 package RUPizza;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents the history of all completed orders in the pizzeria.
  * Provides functionality to add, remove, and retrieve orders from the history.
+ * This class implements the Singleton Design Pattern to manage the order history.
  *
  * @author Rhemie Patiak
  * @author Syona Bhandari
  */
-public class OrderHistory {
+public final class OrderHistory {
     /** List of all completed orders in the history. */
     private List<Order> orders;
+    private Order currentOrder;
     private static OrderHistory instance;
 
     /**
@@ -20,6 +24,7 @@ public class OrderHistory {
      */
     public OrderHistory() {
         orders = new ArrayList<>();
+        currentOrder = new Order(1, new ArrayList<>()); // ensures order number starts at 1
     }
 
     /**
@@ -27,11 +32,34 @@ public class OrderHistory {
      *
      * @return the singleton instance of `OrderHistory`
      */
-    public static OrderHistory getInstance() {
+    public static synchronized OrderHistory getInstance() {
         if (instance == null) {
             instance = new OrderHistory();
         }
         return instance;
+    }
+
+    /**
+     * Gets the currently active order.
+     *
+     * @return the current order
+     */
+    public Order getCurrentOrder() {
+        if (currentOrder == null) {
+            resetCurrentOrder();  // reset if null
+        }
+        Log.d("OrderHistory", "getCurrentOrder called. Current Order: " + currentOrder);
+        return currentOrder;
+    }
+
+    /**
+     * Resets the current order to a new empty order with an incremented order number.
+     * If no previous orders exist, the order number starts at 1.
+     */
+    public void resetCurrentOrder() {
+        Log.d("OrderHistory", "Resetting current order.");
+        int nextOrderNumber = orders == null || orders.isEmpty() ? 1 : orders.get(orders.size() - 1).getOrderNumber() + 1;
+        currentOrder = new Order(nextOrderNumber, new ArrayList<>());
     }
 
     /**

@@ -15,20 +15,28 @@ import java.util.ArrayList;
 public class Order implements Parcelable {
     private int number;
     private ArrayList<Pizza> pizzas;
-    private static int orderCounter = 1;
+
+    // constructors
 
     /**
      * Constructor to create a new order with a unique order number.
      */
-    public Order() {
-        this.number = orderCounter++;
-        this.pizzas = new ArrayList<>();
-    }
-
     public Order(int number, ArrayList<Pizza> pizzas) {
         this.number = number;
         this.pizzas = pizzas != null ? pizzas : new ArrayList<>();
     }
+
+    /**
+     * Constructs an order from a {@link Parcel}.
+     *
+     * @param in the {@link Parcel} containing the serialized order data
+     */
+    protected Order(Parcel in) {
+        number = in.readInt();
+        pizzas = in.createTypedArrayList(Pizza.CREATOR);
+    }
+
+    // public methods
 
     /**
      * Retrieves the unique order number for this order.
@@ -37,13 +45,6 @@ public class Order implements Parcelable {
      */
     public int getOrderNumber() {
         return number;
-    }
-
-    /**
-     * Increments the global order counter and updates the order number.
-     */
-    public void incrementOrderNumber() {
-        this.number = orderCounter++;
     }
 
     /**
@@ -56,29 +57,12 @@ public class Order implements Parcelable {
     }
 
     /**
-     * Removes a pizza from the order.
-     *
-     * @param pizza the pizza to remove from the order
-     */
-    public void removePizza(Pizza pizza) {
-        pizzas.remove(pizza);
-    }
-
-    /**
      * Retrieves the list of pizzas in the order.
      *
      * @return an ArrayList of pizzas in the order.
      */
     public ArrayList<Pizza> getPizzas() {
         return pizzas;
-    }
-
-    /**
-     * Calculates the total price of all pizzas in the order.
-     *
-     */
-    public static void resetOrderCounter() {
-        orderCounter = 1;
     }
 
     /**
@@ -132,28 +116,37 @@ public class Order implements Parcelable {
     }
 
     // parcelable implementation
-    protected Order(Parcel in) {
-        number = in.readInt();
-        pizzas = in.createTypedArrayList(Pizza.CREATOR);
-    }
 
+    /**
+     * Writes the order data to a {@link Parcel}.
+     *
+     * @param dest  the {@link Parcel} where the order data should be written
+     * @param flags additional flags about how the object should be written
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(number);
         dest.writeTypedList(pizzas);
     }
 
+    /**
+     * Describes the contents of this {@link Parcelable}.
+     *
+     * @return an integer representing any special contents (always 0 in this case)
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * A {@link Parcelable.Creator} for creating {@link Order} objects from {@link Parcel}s.
+     */
     public static final Creator<Order> CREATOR = new Creator<Order>() {
         @Override
         public Order createFromParcel(Parcel in) {
             return new Order(in);
         }
-
         @Override
         public Order[] newArray(int size) {
             return new Order[size];

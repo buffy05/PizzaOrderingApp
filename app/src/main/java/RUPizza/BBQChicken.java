@@ -1,8 +1,5 @@
 package RUPizza;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Represents a BBQ Chicken pizza with a set of default toppings and size-based pricing.
  * Extends the {@link Pizza} class.
@@ -41,25 +38,4 @@ public class BBQChicken extends Pizza {
             default: return 0;
         }
     }
-
-    protected BBQChicken(Parcel in) {
-        super(in);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-    }
-
-    public static final Creator<BBQChicken> CREATOR = new Creator<BBQChicken>() {
-        @Override
-        public BBQChicken createFromParcel(Parcel in) {
-            return new BBQChicken(in);
-        }
-
-        @Override
-        public BBQChicken[] newArray(int size) {
-            return new BBQChicken[size];
-        }
-    };
 }
