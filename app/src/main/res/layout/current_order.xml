@@ -21,7 +21,7 @@
         android:id="@+id/textViewOrderNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order Number: 1"
+        android:text="@string/order_number_1"
         android:padding="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -41,19 +41,19 @@
             android:id="@+id/subtotalTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Subtotal: $0.00" />
+            android:text="@string/subtotal_0_00" />
 
         <TextView
             android:id="@+id/taxTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sales Tax: $0.00" />
+            android:text="@string/sales_tax_0_00" />
 
         <TextView
             android:id="@+id/totalTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Total: $0.00" />
+            android:text="@string/order_total_0_00" />
     </LinearLayout>
 
     <!-- Buttons -->
@@ -68,18 +68,18 @@
             android:id="@+id/removeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Remove Pizza" />
+            android:text="@string/remove_pizza" />
 
         <Button
             android:id="@+id/clearOrderButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Clear Order" />
+            android:text="@string/clear_order" />
 
         <Button
             android:id="@+id/placeOrderButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Place Order" />
+            android:text="@string/place_order" />
     </LinearLayout>
 </LinearLayout>

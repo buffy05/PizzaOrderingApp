@@ -97,8 +97,8 @@ public class CurrentOrderActivity extends AppCompatActivity {
     private void updateOrderDetails() {
         // update order number and price summary
         textViewOrderNumber.setText("Order Number: " + currentOrder.getOrderNumber());
-        textViewSubtotal.setText("Subtotal: $" + String.format("%.2f", currentOrder.calculateTotal()));
-        textViewSalesTax.setText("Tax: $" + String.format("%.2f", currentOrder.calculateSalesTax()));
+        textViewSubtotal.setText(String.format("%s%s", getString(R.string.subtotal1), String.format("%.2f", currentOrder.calculateTotal())));
+        textViewSalesTax.setText(String.format("%s%s", getString(R.string.tax1), String.format("%.2f", currentOrder.calculateSalesTax())));
         textViewOrderTotal.setText("Total: $" + String.format("%.2f", currentOrder.calculateOrderTotal()));
 
         if (currentOrder.getPizzas().isEmpty()) {
@@ -118,6 +118,8 @@ public class CurrentOrderActivity extends AppCompatActivity {
         }
         currentOrder.getPizzas().remove(selectedPosition);
         pizzaAdapter.notifyItemRemoved(selectedPosition);
+        pizzaAdapter.setSelectedPosition(-1);
+        pizzaAdapter.notifyDataSetChanged();
         updateOrderDetails();
     }
 

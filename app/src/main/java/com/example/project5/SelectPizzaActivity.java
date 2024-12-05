@@ -69,6 +69,11 @@ public class SelectPizzaActivity extends AppCompatActivity {
     private void populatePizzaList() {
         PizzaFactory ChicagoPizzaFactory = new ChicagoPizza();
         PizzaFactory NYPizzaFactory = new NYPizza();
+        //Build Your Own pizzas
+        Pizza BYOChicagoPizza = ChicagoPizzaFactory.createBuildYourOwn(Size.SMALL);
+        Pizza BYONYPizza = NYPizzaFactory.createBuildYourOwn(Size.SMALL);
+        pizzaObjectList.add(new PizzaObject("Chicago Style Build Your Own Pizza",BYOChicagoPizza, R.drawable.build_pizza));
+        pizzaObjectList.add(new PizzaObject("NY Style Build Your Own Pizza",BYONYPizza, R.drawable.ny_build));
         //BBQ Chicken pizzas
         Pizza BBQChicagoPizza = ChicagoPizzaFactory.createBBQChicken(Size.SMALL);
         Pizza BBQNYPizza = NYPizzaFactory.createBBQChicken(Size.SMALL);
@@ -84,11 +89,6 @@ public class SelectPizzaActivity extends AppCompatActivity {
         Pizza MeatzzaNYPizza = NYPizzaFactory.createMeatzza(Size.SMALL);
         pizzaObjectList.add(new PizzaObject("Chicago Style Meatzza Pizza",MeatzzaChicagoPizza, R.drawable.meatzza));
         pizzaObjectList.add(new PizzaObject("NY Style Meatzza Pizza",MeatzzaNYPizza, R.drawable.ny_meatzza));
-        //Build Your Own pizzas
-        Pizza BYOChicagoPizza = ChicagoPizzaFactory.createBuildYourOwn(Size.SMALL);
-        Pizza BYONYPizza = NYPizzaFactory.createBuildYourOwn(Size.SMALL);
-        pizzaObjectList.add(new PizzaObject("Chicago Style Build Your Own Pizza",BYOChicagoPizza, R.drawable.build_pizza));
-        pizzaObjectList.add(new PizzaObject("NY Style Build Your Own Pizza",BYONYPizza, R.drawable.ny_build));
     }
 
     // public methods

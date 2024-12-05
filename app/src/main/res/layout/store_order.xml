@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:title="Store Orders"
+        android:title="@string/store_orders"
         android:titleTextColor="@android:color/white"
         android:elevation="4dp" />
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Order Number:"
+            android:text="@string/order_number"
             android:textAppearance="?attr/textAppearanceSubtitle1" />
 
         <Spinner
@@ -58,7 +58,7 @@
         android:layout_marginTop="8dp"
         android:padding="16dp"
         android:gravity="center"
-        android:text="Order Total (Tax Included): $0.00"
+        android:text="@string/order_total_tax_included_0_00"
         android:textAppearance="?attr/textAppearanceSubtitle1" />
 
     <!-- Buttons -->
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
-            android:text="Cancel Order" />
+            android:text="@string/cancel_order" />
 
         <Button
             android:id="@+id/placeOrderButton"
@@ -83,6 +83,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="8dp"
-            android:text="Place Order" />
+            android:text="@string/place_order2" />
     </LinearLayout>
 </LinearLayout>

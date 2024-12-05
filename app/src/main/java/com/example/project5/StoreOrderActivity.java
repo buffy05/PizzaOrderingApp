@@ -112,7 +112,7 @@ public class StoreOrderActivity extends AppCompatActivity {
                 // clear RecyclerView and reset the order total
                 pizzaAdapter = new PizzaAdapter(this, new ArrayList<>());
                 storeOrdersRecyclerView.setAdapter(pizzaAdapter);
-                orderTotalText.setText("Order Total (Tax Included): $ 0.00");
+                orderTotalText.setText(R.string.order_total_tax_included_0_001);
                 // repopulate spinner with remaining orders
                 populateOrderSpinner();
                 // confirmation text

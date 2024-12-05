@@ -54,7 +54,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     private void configurePizzaView(PizzaViewHolder holder, Pizza pizza, int position) {
         holder.itemName.setText(pizza.toString());
         holder.itemPrice.setText(String.format("Price: $%.2f", pizza.price()));
-        holder.selectedToppings.setText("Crust: " + pizza.getCrust() + ", Selected Toppings: " + pizza.getToppings());
+        holder.selectedToppings.setText(String.format("%s%s, Selected Toppings: %s", context.getString(R.string.crust1), pizza.getCrust(), pizza.getToppings()));
 
         // Highlight the selected pizza
         holder.itemView.setBackgroundColor(selectedPosition == position ? 0xFFE0E0E0 : 0xFFFFFFFF);
@@ -80,7 +80,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
 
         holder.itemName.setText(pizzaObject.getPizzaName());
         holder.itemPrice.setText(String.format("Price: $%.2f", pizza.price()));
-        holder.selectedToppings.setText("Crust: " + pizza.getCrust() + ", Selected Toppings: " + pizza.getToppings());
+        holder.selectedToppings.setText(String.format("%s%s, Selected Toppings: %s", context.getString(R.string.crust1), pizza.getCrust(), pizza.getToppings()));
         holder.itemImage.setImageResource(pizzaObject.getImageResId());
 
         setupToppingSpinner(holder, pizzaObject);
@@ -118,7 +118,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
                 } else {
                     pizza.addTopping(selectedTopping);
                 }
-                holder.selectedToppings.setText("Crust: " + pizza.getCrust() + ", Selected Toppings: " + pizza.getToppings());
+                holder.selectedToppings.setText(String.format("%s%s, Selected Toppings: %s", context.getString(R.string.crustDetails1), pizza.getCrust(), pizza.getToppings()));
                 holder.itemPrice.setText(String.format("Price: $%.2f", pizza.price()));
                 holder.toppingSpinner.setSelection(0);
             }
@@ -252,6 +252,11 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     @Override
     public int getItemCount() {
         return pizzaList.size();
+    }
+
+    public void setSelectedPosition(int position) {
+        this.selectedPosition = position;
+        notifyDataSetChanged();
     }
 
     /**
