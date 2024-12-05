@@ -53,22 +53,13 @@ public final class OrderHistory {
     }
 
     /**
-     * Sets the currently active order.
-     *
-     * @param order the order to set as the current order
+     * Resets the current order to a new empty order with an incremented order number.
+     * If no previous orders exist, the order number starts at 1.
      */
-    public void setCurrentOrder(Order order) {
-        this.currentOrder = order;
-    }
-
     public void resetCurrentOrder() {
         Log.d("OrderHistory", "Resetting current order.");
         int nextOrderNumber = orders == null || orders.isEmpty() ? 1 : orders.get(orders.size() - 1).getOrderNumber() + 1;
         currentOrder = new Order(nextOrderNumber, new ArrayList<>());
-    }
-
-    public void clearOrderHistory() {
-        orders.clear();
     }
 
     /**

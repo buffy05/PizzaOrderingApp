@@ -15,27 +15,37 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Objects;
 import RUPizza.*;
 
-
+/**
+ * This class manages the Current Order screen.
+ * Displays the current order details and allows the user to manage pizzas.
+ *
+ * @author Rhemie Patiak
+ * @author Syona Bhandari
+ */
 public class CurrentOrderActivity extends AppCompatActivity {
+    private static final String TAG = "CurrentOrderActivity";
     private RecyclerView recyclerViewCurrentOrder;
     private TextView textViewOrderNumber, textViewSubtotal, textViewSalesTax, textViewOrderTotal;
     private Button buttonRemovePizza, buttonClearOrder, buttonPlaceOrder;
     private Order currentOrder;
     private PizzaAdapter pizzaAdapter;
-    private static final String TAG = "CurrentOrderActivity";
 
+    /**
+     * Called when the activity is created.
+     * Initializes views, set up listeners, and populate data.
+     *
+     * @param savedInstanceState Saved instance state for activity restoration.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_order);
-
         // toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Current Order");
-
-        // Initialize Views
+        // initialize views
         recyclerViewCurrentOrder = findViewById(R.id.recyclerViewCurrentOrder);
         textViewOrderNumber = findViewById(R.id.textViewOrderNumber);
         textViewSubtotal = findViewById(R.id.subtotalTextView);
@@ -44,46 +54,48 @@ public class CurrentOrderActivity extends AppCompatActivity {
         buttonRemovePizza = findViewById(R.id.removeButton);
         buttonClearOrder = findViewById(R.id.clearOrderButton);
         buttonPlaceOrder = findViewById(R.id.placeOrderButton);
-
-        // Initialize RecyclerView
+        // initialize RecyclerView
         recyclerViewCurrentOrder.setLayoutManager(new LinearLayoutManager(this));
-
         // retrieve currentOrder
         currentOrder = OrderHistory.getInstance().getCurrentOrder();
         Log.d("CurrentOrderActivity", "Loaded Current Order: " + currentOrder);
         Log.d("CurrentOrderActivity", "Pizzas in Current Order: " + currentOrder.getPizzas());
-
         // initialize PizzaAdapter
         pizzaAdapter = new PizzaAdapter(this, currentOrder.getPizzas());
         recyclerViewCurrentOrder.setAdapter(pizzaAdapter);
         pizzaAdapter.notifyDataSetChanged();
-
-        // Display initial order details
+        // display initial order details
         updateOrderDetails();
-
-        // Set up button listeners
         setupButtonListeners();
     }
 
+    // private methods
+
+    /**
+     * Sets up listeners for all buttons on the activity.
+     */
     private void setupButtonListeners() {
-        // Remove Pizza Button
+        // remove pizza button
         buttonRemovePizza.setOnClickListener(v -> removeSelectedPizza());
 
-        // Clear Order Button
+        // clear order button
         buttonClearOrder.setOnClickListener(v -> {
             clearOrder();
             Log.d(TAG, "Order cleared");
         });
 
-        // Place Order Button
+        // place order button
         buttonPlaceOrder.setOnClickListener(v -> {
             placeOrder();
             Log.d(TAG, "Order placed: " + currentOrder.getOrderNumber());
         });
     }
 
+    /**
+     * Updates the order details displayed on the screen.
+     */
     private void updateOrderDetails() {
-        // Update order number and price summary
+        // update order number and price summary
         textViewOrderNumber.setText("Order Number: " + currentOrder.getOrderNumber());
         textViewSubtotal.setText("Subtotal: $" + String.format("%.2f", currentOrder.calculateTotal()));
         textViewSalesTax.setText("Tax: $" + String.format("%.2f", currentOrder.calculateSalesTax()));
@@ -94,9 +106,11 @@ public class CurrentOrderActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Removes the selected pizza from the current order.
+     */
     private void removeSelectedPizza() {
-        // Remove the selected pizza
+        // remove the selected pizza
         int selectedPosition = pizzaAdapter.getSelectedPosition();
         if (selectedPosition == -1) {
             Toast.makeText(this, "Please select a pizza to remove.", Toast.LENGTH_SHORT).show();
@@ -107,34 +121,45 @@ public class CurrentOrderActivity extends AppCompatActivity {
         updateOrderDetails();
     }
 
+    /**
+     * Clears the current order and updates the UI.
+     */
     private void clearOrder() {
-        // Clear the current order
+        // clear the current order
         currentOrder.getPizzas().clear();
         pizzaAdapter.notifyDataSetChanged();
         updateOrderDetails();
         Toast.makeText(this, "Order cleared.", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Places the current order and resets for a new order.
+     */
     private void placeOrder() {
         if (currentOrder.getPizzas().isEmpty()) {
             Toast.makeText(this, "Order is empty! Add pizzas to place an order.", Toast.LENGTH_SHORT).show();
             return;
         }
-
         // adding order to OrderHistory
         OrderHistory orderHistory = OrderHistory.getInstance();
         orderHistory.addOrder(currentOrder);
 
-        // Show confirmation
+        // confirmation text
         Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
         // reset
         orderHistory.resetCurrentOrder();
-
-        // Navigate back to the main menu
         finish();
     }
 
+    // public methods
+
+    /**
+     * Handles toolbar back button clicks.
+     *
+     * @param item The menu item that was selected.
+     * @return true if the back button is clicked; otherwise false.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

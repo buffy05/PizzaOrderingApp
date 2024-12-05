@@ -21,8 +21,14 @@ import java.util.List;
 
 import RUPizza.*;
 
+/**
+ * This class manages the Store Order screen.
+ * Users can select specific orders, view their details, cancel them, or mark them as placed.
+ *
+ * @author Rhemie Patiak
+ * @author Syona Bhandari
+ */
 public class StoreOrderActivity extends AppCompatActivity {
-
     private Spinner orderNumberSpinner;
     private TextView orderTotalText;
     private RecyclerView storeOrdersRecyclerView;
@@ -30,52 +36,12 @@ public class StoreOrderActivity extends AppCompatActivity {
     private PizzaAdapter pizzaAdapter;
     private OrderHistory orderHistory;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.store_order);
-
-        // setup Toolbar
-        Toolbar toolbar = findViewById(R.id.storeOrderToolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Store Orders");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        // Initialize Views
-        orderNumberSpinner = findViewById(R.id.orderNumberSpinner);
-        orderTotalText = findViewById(R.id.orderTotalText);
-        storeOrdersRecyclerView = findViewById(R.id.storeOrdersRecyclerView);
-        cancelOrderButton = findViewById(R.id.cancelOrderButton);
-        placeOrderButton = findViewById(R.id.placeOrderButton);
-
-        // setup RecyclerView
-        storeOrdersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // initialize orderHistory
-        orderHistory = OrderHistory.getInstance();
-
-        // setup Spinner (Order Numbers)
-        populateOrderSpinner();
-        orderNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                updateOrderDetails();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        // cancel order Button
-        cancelOrderButton.setOnClickListener(v -> cancelSelectedOrder());
-
-        // Place Order Button
-        placeOrderButton.setOnClickListener(v -> placeSelectedOrder());
-
-    }
-
+    // private methods
+    
+    /**
+     * Populates the spinner with order numbers from the OrderHistory.
+     * If there are existing orders, selects the first order by default.
+     */
     private void populateOrderSpinner() {
         List<String> orderNumbers = new ArrayList<>();
         for (Order order : orderHistory.getOrders()) {
@@ -91,6 +57,10 @@ public class StoreOrderActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the RecyclerView and order total text based on the selected order.
+     * Displays the pizzas and calculates the order's total cost.
+     */
     private void updateOrderDetails() {
         if (orderNumberSpinner.getSelectedItem() != null) {
             int selectedOrderNumber = Integer.parseInt(orderNumberSpinner.getSelectedItem().toString());
@@ -105,6 +75,10 @@ public class StoreOrderActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Cancels the currently selected order and removes it from the OrderHistory.
+     * If no order is selected, displays a Toast message prompting the user to select an order.
+     */
     private void cancelSelectedOrder() {
         if (orderNumberSpinner.getSelectedItem() != null) {
             int selectedOrderNumber = Integer.parseInt(orderNumberSpinner.getSelectedItem().toString());
@@ -122,6 +96,10 @@ public class StoreOrderActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Places the currently selected order and removes it from the OrderHistory.
+     * If no order is selected, displays a Toast message prompting the user to select an order.
+     */
     private void placeSelectedOrder() {
         if (orderNumberSpinner.getSelectedItem() != null) {
             // just to acknowledge the order placement
@@ -146,6 +124,14 @@ public class StoreOrderActivity extends AppCompatActivity {
         }
     }
 
+    // public methods
+
+    /**
+     * Handles the toolbar's back navigation button to finish the activity.
+     *
+     * @param item the selected menu item
+     * @return true if the event is handled; false otherwise
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -153,5 +139,44 @@ public class StoreOrderActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called when the activity is first created. Initializes the layout, toolbar,
+     * and handles the spinner, RecyclerView, and button click listeners.
+     *
+     * @param savedInstanceState the saved instance state
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.store_order);
+        Toolbar toolbar = findViewById(R.id.storeOrderToolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Store Orders");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        // initialize Views
+        orderNumberSpinner = findViewById(R.id.orderNumberSpinner);
+        orderTotalText = findViewById(R.id.orderTotalText);
+        storeOrdersRecyclerView = findViewById(R.id.storeOrdersRecyclerView);
+        cancelOrderButton = findViewById(R.id.cancelOrderButton);
+        placeOrderButton = findViewById(R.id.placeOrderButton);
+        // setup RecyclerView
+        storeOrdersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        orderHistory = OrderHistory.getInstance();
+        // setup Spinner (Order Numbers)
+        populateOrderSpinner();
+        orderNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                updateOrderDetails();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        cancelOrderButton.setOnClickListener(v -> cancelSelectedOrder());
+        placeOrderButton.setOnClickListener(v -> placeSelectedOrder());
     }
 }
