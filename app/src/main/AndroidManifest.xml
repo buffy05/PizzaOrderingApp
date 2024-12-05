@@ -32,7 +32,9 @@
             android:name=".CurrentOrderActivity"
             android:exported="true" />
 
-
+        <!-- Store Order Activity -->
+        <activity android:name=".StoreOrderActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

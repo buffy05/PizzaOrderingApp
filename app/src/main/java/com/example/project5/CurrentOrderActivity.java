@@ -1,10 +1,8 @@
 package com.example.project5;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,14 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
-
-import java.util.ArrayList;
 import java.util.Objects;
+import RUPizza.*;
 
-import RUPizza.Order;
-import RUPizza.OrderHistory;
-import RUPizza.Pizza;
 
 public class CurrentOrderActivity extends AppCompatActivity {
     private RecyclerView recyclerViewCurrentOrder;

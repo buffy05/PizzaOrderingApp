@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Toast.makeText(this, "Clicked: " + menuOptions[position], Toast.LENGTH_SHORT).show();
                 break;
             case 2: // Store Orders
-                //intent = new Intent(MainActivity.this, AllPastOrdersActivity.class);
+                intent = new Intent(MainActivity.this, StoreOrderActivity.class);
                 Toast.makeText(this, "Clicked: " + menuOptions[position], Toast.LENGTH_SHORT).show();
                 break;
         }

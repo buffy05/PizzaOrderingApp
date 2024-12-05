@@ -15,16 +15,10 @@ import java.util.ArrayList;
 public class Order implements Parcelable {
     private int number;
     private ArrayList<Pizza> pizzas;
-    private static int orderCounter = 1;
 
     /**
      * Constructor to create a new order with a unique order number.
      */
-    public Order() {
-        this.number = orderCounter++;
-        this.pizzas = new ArrayList<>();
-    }
-
     public Order(int number, ArrayList<Pizza> pizzas) {
         this.number = number;
         this.pizzas = pizzas != null ? pizzas : new ArrayList<>();
@@ -40,13 +34,6 @@ public class Order implements Parcelable {
     }
 
     /**
-     * Increments the global order counter and updates the order number.
-     */
-    public void incrementOrderNumber() {
-        this.number = orderCounter++;
-    }
-
-    /**
      * Adds a pizza to the order.
      *
      * @param pizza the pizza to add to the order
@@ -55,14 +42,6 @@ public class Order implements Parcelable {
         pizzas.add(pizza);
     }
 
-    /**
-     * Removes a pizza from the order.
-     *
-     * @param pizza the pizza to remove from the order
-     */
-    public void removePizza(Pizza pizza) {
-        pizzas.remove(pizza);
-    }
 
     /**
      * Retrieves the list of pizzas in the order.
@@ -71,14 +50,6 @@ public class Order implements Parcelable {
      */
     public ArrayList<Pizza> getPizzas() {
         return pizzas;
-    }
-
-    /**
-     * Calculates the total price of all pizzas in the order.
-     *
-     */
-    public static void resetOrderCounter() {
-        orderCounter = 1;
     }
 
     /**
