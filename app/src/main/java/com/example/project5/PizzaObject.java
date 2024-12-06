@@ -67,13 +67,4 @@ public class PizzaObject {
     public boolean isSelected() {
         return isSelected;
     }
-
-    /**
-     * Sets the selection state of the pizza.
-     *
-     * @param selected true to mark the pizza as selected, otherwise false.
-     */
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
 }

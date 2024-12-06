@@ -102,16 +102,6 @@ public abstract class Pizza implements Parcelable {
     }
 
     /**
-     * Checks if the pizza is a "Build Your Own" type.
-     * This method should be overridden by subclasses if applicable.
-     *
-     * @return true if the pizza is "Build Your Own", false otherwise.
-     */
-    public boolean isBuildYourOwn() {
-        return false;
-    }
-
-    /**
      * Calculates the price of the pizza. This method is abstract and must be implemented
      * by subclasses to calculate the specific price based on size and toppings.
      *

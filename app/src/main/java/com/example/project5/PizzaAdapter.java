@@ -1,7 +1,6 @@
 package com.example.project5;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -216,32 +215,12 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     }
 
     /**
-     * Updates the pizza list and refreshes the RecyclerView.
-     *
-     * @param newPizzaList the new pizza list to set
-     */
-    public void updateData(List<?> newPizzaList) {
-        this.pizzaList = newPizzaList;
-        notifyDataSetChanged();
-    }
-
-    /**
      * Gets the selected position in the RecyclerView.
      *
      * @return the selected position
      */
     public int getSelectedPosition() {
         return selectedPosition;
-    }
-
-    /**
-     * Sets a new list of pizzas and refreshes the RecyclerView.
-     *
-     * @param pizzas the new list of pizzas
-     */
-    public void setPizzas(List<?> pizzas) {
-        this.pizzaList = pizzas;
-        notifyDataSetChanged();
     }
 
     /**
