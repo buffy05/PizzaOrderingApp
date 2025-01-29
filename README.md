@@ -18,4 +18,3 @@ Platform: Android
 Implement user authentication for personalized order tracking.
 Integrate payment options for seamless checkout.
 
-📷 Screenshots 
