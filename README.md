@@ -14,7 +14,7 @@ Past Orders – Access store order history for better tracking.
 Java, Kotlin, Gradle, 
 Platform: Android
 
-🚀 Potential Future Enhancements
+🚀 Potential Future Enhancements: 
 Implement user authentication for personalized order tracking.
 Integrate payment options for seamless checkout.
 
