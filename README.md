@@ -13,7 +13,6 @@ Past Orders – Access store order history for better tracking.
 🛠️ Tech Stack
 Languages: Java, Kotlin
 Platform: Android
-Architecture: MVVM / MVP (if applicable)
 
 🚀 Potential Future Enhancements
 Implement user authentication for personalized order tracking.
