@@ -1,4 +1,4 @@
-🍕 Pizza Delivery App
+🍕 Pizza Ordering App
 
 📱 Overview: 
 This is a pizza delivery Android application built using Java and Kotlin. The app provides a seamless ordering experience, allowing users to select pizzas, manage their orders, and track past store orders.
