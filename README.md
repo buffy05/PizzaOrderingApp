@@ -11,7 +11,7 @@ View Current Order – Review all selected items before placing an order.
 Past Orders – Access store order history for better tracking.
 
 🛠️ Tech Stack: 
-Java, Kotlin, Gradle
+Java, Kotlin, Gradle, 
 Platform: Android
 
 🚀 Potential Future Enhancements
